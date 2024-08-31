@@ -1,9 +1,18 @@
 # accounts/views.py
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, PostForm
 from django.contrib import messages 
+from .models import Post, Like
+
+
+def start(request):
+    return render(request, "accounts/start.html")
+
+def aboutus(request):
+    return render(request, "accounts/aboutus.html")
+
 
 def register(request):
     if request.method == 'POST':
@@ -47,3 +56,37 @@ def user_logout(request):
 @login_required
 def home(request):
     return render(request, 'accounts/home.html')
+
+@login_required
+def postconfession(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False, user=request.user)
+            post.save()
+            return redirect('viewpost') 
+    else:
+        form = PostForm()
+
+    return render(request, 'post_confessionform.html', {'form': form})
+
+@login_required
+def view_post(request):
+    posts = Post.objects.order_by('-created_at')
+    # Add a flag to each post indicating if the current user has liked it
+    for post in posts:
+        post.is_liked_by_user = post.like_set.filter(user=request.user).exists()
+
+    return render(request, 'post_list.html', {'posts': posts})
+
+@login_required
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+    
+    if not created:
+        like.delete()
+    
+    return redirect('viewpost')  
+
+

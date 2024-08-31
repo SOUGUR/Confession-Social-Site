@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: #80dce1;
             padding: 20px;
         }
         
@@ -45,7 +45,7 @@
         }
         
         button:hover {
-            background-color: #45a049;
+            background-color: #da1313;
         }
 
         .error-message {
@@ -55,6 +55,7 @@
     </style>
 </head>
 <body>
+    {% include 'accounts/header.html' %}
     <h2>Login</h2>
     <form method="post">
         {% csrf_token %}

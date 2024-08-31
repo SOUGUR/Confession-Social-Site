@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confession Posts</title>
+    <style>
+        .container {
+        display: inline-block; 
+        background-color: #ffffff; 
+        padding: 20px; 
+        border-radius: 5px; 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.728); 
+        margin: 10px; 
+    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #8fd4ec;
+            padding: 20px;
+        }
+        
+        .post {
+            background-color: rgba(124, 152, 217, 0.568);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .post h2 {
+            color: #333;
+        }
+        
+        .post p {
+            color: #050505;
+        }
+        
+        .post .author {
+            font-style: italic;
+            color: #060606;
+        }
+
+        .like-button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #5cb85c;
+            color: white;
+            font-weight: bold;
+        }
+
+        .like-button:hover {
+            background-color: #f12727;
+        }
+    </style>
+</head>
+<body>
+    {% include 'accounts/header.html' %}
+    <h1>Confession Posts of People around:</h1>
+    {% if posts %}
+        {% for post in posts %}
+        <div class="post">
+            <h2>{{ post.user.username }}'s confession:</h2>
+            <p class="container">{{ post.confession }}</p>
+            <p class="author">Posted on {{ post.created_at }}</p>
+            <p>
+                <form action="{% url 'like_post' post.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="like-button">
+                        {% if user.is_authenticated %}
+                            {% if post.is_liked_by_user %}
+                                Unlike
+                            {% else %}
+                                Like
+                            {% endif %}
+                        {% else %}
+                            Please <a href="{% url 'login' %}">log in</a> to like this post.
+                        {% endif %}
+                    </button>
+                </form>
+                <span>{{ post.like_set.count }} likes</span>
+            </p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="post">
+            <p>No posts yet</p>
+        </div>
+    {% endif %}
+</body>
+</html>

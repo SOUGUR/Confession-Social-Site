@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Confession Spot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #6dc7cde2;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #000000;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 15px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .card h2 {
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .card p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class = "header">
+        <h1>ABOUT US</h1>
+        <p>Learn more about our mission and team at Confession Spot</p>
+    </div>
+    
+
+    <div class="container">
+        <div class="card">
+            <img src="{% static 'accounts/images/mission.png' %}" alt="Our Mission">
+            <h2>Our Mission</h2>
+            <p>At Confession Spot, we aim to provide a safe and supportive environment for individuals to share their thoughts and feelings. Our mission is to foster understanding and empathy through shared experiences.</p>
+        </div>
+
+        <div class="card">
+            <img src= "{% static 'accounts/images/team.png' %}" alt="Our Team">
+            <h2>Our Team</h2>
+            <p>Our dedicated team of professionals is committed to ensuring that every confession is treated with respect and confidentiality. We believe in the power of community and support.</p>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'accounts/images/community.png' %}" alt="Our Community">
+            <h2>Our Community</h2>
+            <p>We are proud of our diverse community that embraces individuals from all walks of life. Together, we create an inclusive space where everyone can feel heard and valued.</p>
+        </div>
+    </div>
+</body>
+</html>

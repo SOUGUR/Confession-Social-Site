@@ -1,0 +1,30 @@
+<!-- templates/includes/header.html -->
+<style>
+    button:hover {
+        background-color: #f42222; 
+    }
+</style>
+<nav style="background-color: #1ade2195; padding: 20px;">
+    <h1 style="color: white; display: inline;">Confession Spot</h1>
+    <div style="float: right;">
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background-color: transparent; color: #050505; border: 2px solid black; cursor: pointer; font-size: large;">
+                    Logout
+                </button>
+            </form>
+            <form action="{% url 'aboutus' %}" method="get" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background-color: transparent; color: #050505; border: 2px solid black; cursor: pointer; font-size: large;">
+                    About Us
+                </button>
+            </form>
+        {% elif not user.is_authenticated %}
+        <div style="float: right;">
+            <a href="{% url 'login' %}" style=" padding: 7px ; color: rgb(0, 0, 0); text-decoration: none; margin-left: 20px; display: inline; border: 2px solid black">Login</a>
+            <a href="{% url 'aboutus' %}" style="padding: 7px ; color: rgb(0, 0, 0); text-decoration: none; margin-left: 20px; display: inline; border: 2px solid black">About Us</a>
+        </div>
+        {% endif %}
+    </div>
+</nav>
